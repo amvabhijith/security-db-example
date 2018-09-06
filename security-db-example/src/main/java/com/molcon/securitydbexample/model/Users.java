@@ -24,6 +24,16 @@ public class Users {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name	= "user_role", joinColumns = JoinColumn(name=))
 	private Set<Role> roles;
+	public Users(Users users) {
+		// TODO Auto-generated constructor stub
+		this.active = users.getActive();
+		this.email = users.getEmail();
+		this.roles = users.getRoles();
+		this.name = users.getName();
+		this.lastName = users.getLastName();
+		this.id = users.getId();
+		this.password = users.getPassword();
+	}
 	public int getId() {
 		return id;
 	}
