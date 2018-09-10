@@ -1,5 +1,7 @@
 package com.molcon.securitydbexample.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,8 +19,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		Users users = usersRepository.findByName(username);
-		return new CustomUserDetails(users);
+		Optional<Users> optionalUsers = usersRepository.findByName(username);
+		optionalUsers.orElseThrow(() -> new UsernameNotFoundException("Username not Found"));
+		return optionalUsers
+				.map(CustomUserDetails::new).get();
 	}
 
 }
